@@ -8,7 +8,7 @@ test.describe('Contact Us form — candymapper.net', () => {
     await page.goto(CANDYMAPPER_URL);
 
     // Wait up to 10s for the modal/banner to appear, then dismiss it
-    const closeLink = page.locator('[data-testid="linkElement"]');
+    const closeLink = page.locator('[aria-label="FIND MY CANDY"]');
     await closeLink.waitFor({ state: 'visible', timeout: 10000 });
     await closeLink.click();
   });
