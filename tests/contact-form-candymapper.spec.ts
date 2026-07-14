@@ -55,12 +55,8 @@ test.describe('Contact Us form — candymapper.net', () => {
     await page.waitForTimeout(300);
     await page.keyboard.press('Enter');
 
-    // NOTE: This form is protected by reCAPTCHA. The submit button state
-    // and any success message assertion may not be reachable in a headless
-    // automated run without a reCAPTCHA bypass strategy.
-    // The assertions below will pass only in environments where reCAPTCHA
-    // is disabled or mocked.
-    await expect(page.locator('[data-hook="submit-button"]')).toHaveAttribute('aria-disabled', 'true', { timeout: 5000 });
+    // Wait for the success message to appear after submission
+    await expect(page.getByText('Thank you for your inquiry! We will get back to you within 48 hours.')).toBeVisible({ timeout: 10000 });
   });
 
 });
