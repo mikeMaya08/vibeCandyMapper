@@ -7,11 +7,10 @@ test.describe('Contact Us form — candymapper.net', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(CANDYMAPPER_URL);
 
-    // Dismiss the modal/banner if it appears (Wix overlay close link)
+    // Wait up to 10s for the modal/banner to appear, then dismiss it
     const closeLink = page.locator('[data-testid="linkElement"]');
-    if (await closeLink.isVisible()) {
-      await closeLink.click();
-    }
+    await closeLink.waitFor({ state: 'visible', timeout: 10000 });
+    await closeLink.click();
   });
 
   test('fills and submits the contact form using keyboard input', async ({ page }) => {
