@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const BASE_URL = 'https://be-candy-mapper.vercel.app/';
+const BASE_URL = 'https://vibe-candy-mapper.vercel.app/';
 
 test.describe('Contact Us form', () => {
 
