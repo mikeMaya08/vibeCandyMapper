@@ -4,7 +4,7 @@ export default defineConfig({
   testDir: './tests',
   timeout: 30_000,
   use: {
-    baseURL: 'https://be-candy-mapper.vercel.app/',
+    baseURL: 'https://vibe-candy-mapper.vercel.app/',
     headless: true,
   },
   reporter: [
