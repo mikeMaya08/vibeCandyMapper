@@ -37,4 +37,20 @@ test.describe('Contact Us form', () => {
     await expect(page.locator('#successView p')).toHaveText('Thank you! Your message has been sent.');
   });
 
+  test('shows email validation error when submitting Dynamic Values challenge form without email', async ({ page }) => {
+    // Navigate to the Challenges section and click the Dynamic Values card
+    await page.locator('#optionsGrid').scrollIntoViewIfNeeded();
+    await page.getByRole('link', { name: 'Start validating ->' }).click();
+
+    // The click scrolls to the contact form — fill First Name and Last Name only
+    await page.getByRole('textbox', { name: 'First Name' }).fill('Min');
+    await page.getByRole('textbox', { name: 'Last Name' }).fill('Mon');
+
+    // Submit without an email address
+    await page.getByRole('button', { name: 'SUBMIT' }).click();
+
+    // Assert the email validation error is displayed
+    await expect(page.locator('#emailError')).toHaveText('Please enter a valid email address');
+  });
+
 });
