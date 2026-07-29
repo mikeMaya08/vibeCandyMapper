@@ -17,7 +17,7 @@ test.describe('Contact Us form — Dynamic Values challenge', () => {
   test('shows email validation error when submitting Dynamic Values challenge form without email', async ({ page }) => {
     // Navigate to the Challenges section and click the Dynamic Values card
     await page.locator('#optionsGrid').scrollIntoViewIfNeeded();
-    await page.getByRole('link', { name: 'Start validating ->' }).click();
+    await page.locator('//button[@data-topic="Dynamic Values"]').click();
 
     // The click scrolls to the contact form — fill First Name and Last Name only
     await page.getByRole('textbox', { name: 'First Name' }).fill('Min');
