@@ -1,0 +1,12 @@
+{
+  "name": "vibecandymapper",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0",
+    "@muuktest/amikoo-reporter": "latest"
+  }
+}
