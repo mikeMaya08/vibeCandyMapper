@@ -67,8 +67,10 @@ const test = base.extend({});
 test.describe('Welcome popup modal — BDD / Gherkin pattern', () => {
 
   test.beforeEach(async ({ page }) => {
-    await page.evaluate(() => localStorage.removeItem('seenContactModal'));
+    // Navigate first so localStorage is accessible, then clear the flag and reload
     await page.goto('/');
+    await page.evaluate(() => localStorage.removeItem('seenContactModal'));
+    await page.reload();
     const { expect } = await import('@playwright/test');
     await expect(page.locator('#modalOverlay')).toHaveClass(/open/);
   });
