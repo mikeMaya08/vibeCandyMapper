@@ -4,6 +4,8 @@ import { defineBddConfig } from 'playwright-bdd';
 const bddTestDir = defineBddConfig({
   features: 'tests/patrones/bdd-gherkin/**/*.feature',
   steps: 'tests/patrones/bdd-gherkin/steps/**/*.ts',
+  // Generated specs output dir (default: .features-gen)
+  outputDir: '.features-gen',
 });
 
 export default defineConfig({
