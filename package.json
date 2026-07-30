@@ -3,10 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "test": "playwright test"
+    "test": "playwright test",
+    "bdd": "bddgen && playwright test",
+    "bddgen": "bddgen"
   },
   "devDependencies": {
     "@playwright/test": "^1.49.0",
-    "@muuktest/amikoo-reporter": "latest"
+    "@muuktest/amikoo-reporter": "latest",
+    "playwright-bdd": "^8.0.0"
   }
 }
