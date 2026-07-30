@@ -1,63 +1,43 @@
-import { test, expect } from '@playwright/test';
-
-const BASE_URL = 'https://vibe-candy-mapper.vercel.app/';
+import { test } from '@playwright/test';
+import { WelcomePopupPage } from '../pages/WelcomePopupPage';
+import { ChallengesPage } from '../pages/ChallengesPage';
+import { ContactFormPage } from '../pages/ContactFormPage';
 
 // VARIANTE 7: describe.serial
-// Los tests corren en orden secuencial y comparten estado de página.
+// Los tests corren en orden secuencial.
 // Si uno falla, los siguientes se saltan automáticamente.
 // Útil para flujos donde cada paso depende del anterior.
 
 test.describe.serial('Dynamic Values challenge — flujo serial', () => {
 
-  test.beforeAll(async ({ browser }) => {
-    // En serial, beforeAll corre una sola vez antes de todos los tests
-    const page = await browser.newPage();
-    await page.goto(BASE_URL);
-    await page.close();
-  });
-
   test('1. Navega al sitio y cierra el modal', async ({ page }) => {
-    await page.goto(BASE_URL);
-
-    const findCandyBtn = page.getByRole('button', { name: 'FIND MY CANDY!' });
-    if (await findCandyBtn.isVisible()) {
-      await findCandyBtn.click();
-    }
-
-    await expect(findCandyBtn).not.toBeVisible();
+    await page.goto('/');
+    const popup = new WelcomePopupPage(page);
+    await popup.dismissWithFindMyCandyButton();
   });
 
   test('2. Hace clic en la card Dynamic Values', async ({ page }) => {
-    await page.goto(BASE_URL);
+    await page.goto('/');
+    const popup = new WelcomePopupPage(page);
+    await popup.dismissIfVisible();
 
-    const findCandyBtn = page.getByRole('button', { name: 'FIND MY CANDY!' });
-    if (await findCandyBtn.isVisible()) {
-      await findCandyBtn.click();
-    }
-
-    await page.locator('#optionsGrid').scrollIntoViewIfNeeded();
-    await page.locator('//button[@data-topic="Dynamic Values"]').click();
-
-    // Verify we scrolled to the contact section
-    await expect(page.locator('#contactSection')).toBeInViewport();
+    const challenges = new ChallengesPage(page);
+    await challenges.selectChallenge('Dynamic Values');
+    await challenges.expectContactSectionInViewport();
   });
 
   test('3. Llena el formulario sin email y verifica el error', async ({ page }) => {
-    await page.goto(BASE_URL);
+    await page.goto('/');
+    const popup = new WelcomePopupPage(page);
+    await popup.dismissIfVisible();
 
-    const findCandyBtn = page.getByRole('button', { name: 'FIND MY CANDY!' });
-    if (await findCandyBtn.isVisible()) {
-      await findCandyBtn.click();
-    }
+    const challenges = new ChallengesPage(page);
+    await challenges.selectChallenge('Dynamic Values');
 
-    await page.locator('#optionsGrid').scrollIntoViewIfNeeded();
-    await page.locator('//button[@data-topic="Dynamic Values"]').click();
-
-    await page.getByRole('textbox', { name: 'First Name' }).fill('Min');
-    await page.getByRole('textbox', { name: 'Last Name' }).fill('Mon');
-    await page.getByRole('button', { name: 'SUBMIT' }).click();
-
-    await expect(page.locator('#emailError')).toHaveText('Please enter a valid email address');
+    const form = new ContactFormPage(page);
+    await form.fillForm({ firstName: 'Min', lastName: 'Mon' });
+    await form.submit();
+    await form.expectEmailValidationError();
   });
 
 });
