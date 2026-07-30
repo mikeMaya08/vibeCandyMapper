@@ -1,6 +1,7 @@
-import { test, expect } from '@playwright/test';
-
-const BASE_URL = 'https://vibe-candy-mapper.vercel.app/';
+import { test } from '@playwright/test';
+import { WelcomePopupPage } from '../pages/WelcomePopupPage';
+import { ChallengesPage } from '../pages/ChallengesPage';
+import { ContactFormPage } from '../pages/ContactFormPage';
 
 // VARIANTE 3: test.step
 // Divide el test en pasos con nombre. El reporte muestra exactamente
@@ -9,35 +10,30 @@ const BASE_URL = 'https://vibe-candy-mapper.vercel.app/';
 test.describe('Dynamic Values challenge — test.step', () => {
 
   test.beforeEach(async ({ page }) => {
-    await page.goto(BASE_URL);
-
-    // Dismiss the welcome modal if it appears
-    const findCandyBtn = page.getByRole('button', { name: 'FIND MY CANDY!' });
-    if (await findCandyBtn.isVisible()) {
-      await findCandyBtn.click();
-    }
+    await page.goto('/');
+    const popup = new WelcomePopupPage(page);
+    await popup.dismissIfVisible();
   });
 
   test('shows email validation error when submitting without email', async ({ page }) => {
+    const challenges = new ChallengesPage(page);
+    const form = new ContactFormPage(page);
 
-    await test.step('Navigate to the Dynamic Values card', async () => {
-      await page.locator('#optionsGrid').scrollIntoViewIfNeeded();
-      await page.locator('//button[@data-topic="Dynamic Values"]').click();
+    await test.step('Navigate to the Dynamic Values challenge', async () => {
+      await challenges.selectChallenge('Dynamic Values');
     });
 
     await test.step('Fill form without email', async () => {
-      await page.getByRole('textbox', { name: 'First Name' }).fill('Min');
-      await page.getByRole('textbox', { name: 'Last Name' }).fill('Mon');
+      await form.fillForm({ firstName: 'Min', lastName: 'Mon' });
     });
 
     await test.step('Submit the form', async () => {
-      await page.getByRole('button', { name: 'SUBMIT' }).click();
+      await form.submit();
     });
 
     await test.step('Assert email validation error is shown', async () => {
-      await expect(page.locator('#emailError')).toHaveText('Please enter a valid email address');
+      await form.expectEmailValidationError();
     });
-
   });
 
 });
