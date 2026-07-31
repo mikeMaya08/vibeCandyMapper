@@ -29,5 +29,12 @@ export default defineConfig({
       testDir: bddTestDir,
       use: { ...devices['Desktop Chrome'] },
     },
+    {
+      // stress test: data-builders specs live outside testDir in e2e/
+      name: 'data-builders-e2e',
+      testDir: './e2e',
+      testMatch: '**/*.spec.ts',
+      use: { ...devices['Desktop Chrome'] },
+    },
   ],
 });
