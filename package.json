@@ -9,7 +9,6 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.49.0",
-    "@muuktest/amikoo-reporter": "latest",
-    "playwright-bdd": "^8.0.0"
+    "@muuktest/amikoo-reporter": "latest"
   }
 }
