@@ -88,4 +88,23 @@ export class ContactFormPage {
       'Thank you! Your message has been sent.'
     );
   }
+
+  /**
+   * Asserts the form view is visible and the success view is hidden.
+   * Use after the auto-reset timer fires (~10 s after submission).
+   * Timeout is raised to 15 s to cover the 10 s delay plus network/render time.
+   */
+  async expectFormVisible() {
+    await expect(this.page.locator('#formView')).toBeVisible({ timeout: 15_000 });
+    await expect(this.page.locator(this.successView)).toBeHidden();
+  }
+
+  /**
+   * Asserts that the First Name and Email fields are empty,
+   * confirming the form was reset after the success view was shown.
+   */
+  async expectFieldsEmpty() {
+    await expect(this.firstNameField).toHaveValue('');
+    await expect(this.emailField).toHaveValue('');
+  }
 }
