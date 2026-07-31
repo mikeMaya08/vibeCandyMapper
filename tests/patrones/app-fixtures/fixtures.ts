@@ -1,7 +1,7 @@
 import { test as base } from '@playwright/test';
-import { WelcomePopupPage } from '../../pages/WelcomePopupPage';
-import { ContactFormPage } from '../../pages/ContactFormPage';
-import { ChallengesPage } from '../../pages/ChallengesPage';
+import { WelcomePopupPage } from '@pages/WelcomePopupPage';
+import { ContactFormPage } from '@pages/ContactFormPage';
+import { ChallengesPage } from '@pages/ChallengesPage';
 
 /**
  * App Fixtures pattern: extends Playwright's base `test` with pre-built
