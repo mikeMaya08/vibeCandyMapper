@@ -12,6 +12,7 @@ export class ContactFormPage {
   private readonly lastNameField;
   private readonly emailField;
   private readonly submitBtn;
+  private readonly nameError = '#firstNameError';
   private readonly emailError = '#emailError';
   private readonly submitLabel = '#submitLabel';
   private readonly successView = '#successView';
@@ -69,6 +70,16 @@ export class ContactFormPage {
 
   // ── Assertions ───────────────────────────────────────────────────────────
 
+  /** Asserts the name validation error message is shown. */
+  async expectNameValidationError() {
+    await expect(this.page.locator(this.nameError)).toHaveText('Name is required');
+  }
+
+  /** Asserts the name validation error is not shown. */
+  async expectNoNameValidationError() {
+    await expect(this.page.locator(this.nameError)).toBeEmpty();
+  }
+
   /** Asserts the email validation error message is shown. */
   async expectEmailValidationError() {
     await expect(this.page.locator(this.emailError)).toHaveText(
@@ -76,9 +87,49 @@ export class ContactFormPage {
     );
   }
 
+  /** Asserts the email validation error is not shown. */
+  async expectNoEmailValidationError() {
+    await expect(this.page.locator(this.emailError)).toBeEmpty();
+  }
+
+  /**
+   * Asserts that the First Name field carries the `invalid` CSS class
+   * (the visual red-border state set by the form validation logic).
+   */
+  async expectNameFieldInvalid() {
+    await expect(this.page.locator('#firstNameInput')).toHaveClass(/invalid/);
+  }
+
+  /**
+   * Asserts that the First Name field no longer carries the `invalid` CSS class
+   * (i.e. the error was cleared as the user started typing).
+   */
+  async expectNameFieldValid() {
+    await expect(this.page.locator('#firstNameInput')).not.toHaveClass(/invalid/);
+  }
+
+  /**
+   * Asserts that the Email field carries the `invalid` CSS class.
+   */
+  async expectEmailFieldInvalid() {
+    await expect(this.page.locator('#emailInput')).toHaveClass(/invalid/);
+  }
+
+  /**
+   * Asserts that the Email field no longer carries the `invalid` CSS class.
+   */
+  async expectEmailFieldValid() {
+    await expect(this.page.locator('#emailInput')).not.toHaveClass(/invalid/);
+  }
+
   /** Asserts the submit button transitions to "Sending..." state. */
   async expectSendingState() {
     await expect(this.page.locator(this.submitLabel)).toContainText('Sending...');
+  }
+
+  /** Asserts the submit button is disabled (cannot be clicked while submitting). */
+  async expectSubmitButtonDisabled() {
+    await expect(this.submitBtn).toBeDisabled();
   }
 
   /** Asserts the success view is visible with the confirmation message. */
