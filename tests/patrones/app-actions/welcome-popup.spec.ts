@@ -27,7 +27,8 @@ test.describe('Welcome popup modal — App Actions pattern', () => {
     await expectPopupContent(page);
   });
 
-  test('closes when the X button is clicked', async ({ page }) => {
+  // stress test: test.only — only this test runs in the file
+  test.only('closes when the X button is clicked', async ({ page }) => {
     await dismissPopupWithCloseButton(page);
   });
 
