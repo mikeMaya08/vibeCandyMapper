@@ -11,7 +11,7 @@ export default defineConfig({
   testDir: './tests',
   timeout: 30_000,
   use: {
-    baseURL: 'https://vibe-candy-mapper.vercel.app/',
+    baseURL: process.env.BASE_URL ?? 'https://vibe-candy-mapper.vercel.app/',
     headless: true,
   },
   reporter: [
