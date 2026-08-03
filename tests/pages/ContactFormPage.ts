@@ -70,6 +70,11 @@ export class ContactFormPage {
 
   // ── Assertions ───────────────────────────────────────────────────────────
 
+  /** Asserts the first-name validation error message is shown. */
+  async expectNameValidationError() {
+    await expect(this.page.locator(this.nameError)).toHaveText('Name is required');
+  }
+
   /** Asserts the email validation error message is shown. */
   async expectEmailValidationError() {
     await expect(this.page.locator(this.emailError)).toHaveText(
