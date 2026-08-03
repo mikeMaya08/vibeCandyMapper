@@ -12,6 +12,7 @@ export class ContactFormPage {
   private readonly lastNameField;
   private readonly emailField;
   private readonly submitBtn;
+  private readonly nameError = '#firstNameError';
   private readonly emailError = '#emailError';
   private readonly submitLabel = '#submitLabel';
   private readonly successView = '#successView';
@@ -68,6 +69,11 @@ export class ContactFormPage {
   }
 
   // ── Assertions ───────────────────────────────────────────────────────────
+
+  /** Asserts the first-name validation error message is shown. */
+  async expectNameValidationError() {
+    await expect(this.page.locator(this.nameError)).toHaveText('Name is required');
+  }
 
   /** Asserts the email validation error message is shown. */
   async expectEmailValidationError() {
