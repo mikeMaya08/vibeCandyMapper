@@ -12,7 +12,7 @@ export class ContactFormPage {
   private readonly lastNameField;
   private readonly emailField;
   private readonly submitBtn;
-  private readonly nameError = '#nameError';
+  private readonly nameError = '#firstNameError';
   private readonly emailError = '#emailError';
   private readonly submitLabel = '#submitLabel';
   private readonly successView = '#successView';
