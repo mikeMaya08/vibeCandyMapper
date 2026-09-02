@@ -33,4 +33,22 @@ export class ChallengesPage {
   async expectContactSectionInViewport() {
     await expect(this.page.locator('#contactSection')).toBeInViewport();
   }
+
+  /**
+   * Asserts the context message above the contact form matches the selected topic.
+   * The app renders: You selected "<topic>" — tell us more below.
+   */
+  async expectContactTopicText(topic: string) {
+    await expect(this.page.locator('#contactTopic')).toHaveText(
+      `You selected \u201c${topic}\u201d \u2014 tell us more below.`
+    );
+  }
+
+  /**
+   * Asserts that the First Name input has focus after a card is clicked.
+   * The app calls nameInput.focus() as part of the card-click handler.
+   */
+  async expectFirstNameFocused() {
+    await expect(this.page.locator('#firstNameInput')).toBeFocused();
+  }
 }
